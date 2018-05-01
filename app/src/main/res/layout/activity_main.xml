@@ -9,28 +9,35 @@
 
     <EditText
         android:id="@+id/Destination_Point"
-        android:layout_width="395dp"
+        android:layout_width="380"
         android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Enter Destination"
+        android:hint="Enter A Destination"
         android:inputType="text"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Starting_Point"
-        tools:layout_editor_absoluteX="8dp"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/Starting_Point"
-        android:layout_width="395dp"
+        android:layout_width="380"
         android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:ems="10"
-        android:hint="Enter Starting Point"
+        android:hint="Enter A Starting Point"
         android:inputType="text"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="33dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="74dp" />
 
     <Button
         android:id="@+id/OK_button"
@@ -38,8 +45,6 @@
         android:layout_height="69dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="OK"
@@ -64,4 +69,16 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OK_button" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="70"
+        android:layout_height="70"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pin"
+        tools:layout_editor_absoluteY="4dp" />
+
 </android.support.constraint.ConstraintLayout>
