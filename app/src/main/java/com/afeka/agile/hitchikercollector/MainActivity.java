@@ -1,5 +1,6 @@
 package com.afeka.agile.hitchikercollector;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,9 +26,15 @@ public class MainActivity extends AppCompatActivity {
                 TextView Output = findViewById(R.id.Output);
                 if(Starting_Point.isEmpty() || Destination_Point.isEmpty())
                     Output.setText("Missing input!");
-                else
+                else {
                     Output.setText("Driving from " + Starting_Point + " to " + Destination_Point + "...\nHave a nice ride!");
+                    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                    //intent.putExtra("START", Starting_Point);
+                    //intent.putExtra("DESTINATION", Destination_Point);
+                    startActivity(intent);
+                }
             }
         });
+
     }
 }
