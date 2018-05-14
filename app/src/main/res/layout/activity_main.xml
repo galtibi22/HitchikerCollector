@@ -9,7 +9,8 @@
 
     <EditText
         android:id="@+id/Destination_Point"
-        android:layout_width="395dp"
+        android:text="Afeka College"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -21,8 +22,9 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
+        android:text="@string/current_location"
         android:id="@+id/Starting_Point"
-        android:layout_width="395dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:ems="10"
         android:hint="Enter Starting Point"
