@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.afeka.agile.hitchikercollector.App;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -20,27 +21,17 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class LocationUtil {
 
-    private Context context;
-    public LocationUtil(Context context) {
-        this.context = context;
+    private static Context context = App.getContext();
+    public LocationUtil() {
         context.startService(new Intent(context, LocationService.class));
     }
 
-    public String getLatLngFromAddress(String strAddress) {
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        try {
-            address = coder.getFromLocationName(strAddress, 1);
-            if (address == null) {
-                return null;
-            }
-            return address.get(0).getLatitude() + "," + address.get(0).getLongitude();
-        } catch (Exception e) {
-            return null;
-        }
+    public static String addressToLatLngStr(String address) {
+        LatLng latLng=addressToLatLng(address);
+        return latLng.latitude +","+latLng.longitude;
     }
 
-    public String getCurrentLocation() {
+    public static LatLng getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
         }
@@ -73,7 +64,24 @@ public class LocationUtil {
                 }
             }
         }
-        return currentLocation.latitude + "," + currentLocation.longitude;
+        return currentLocation;
     }
 
+    public static LatLng addressToLatLng(String strAddress) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        try {
+            address = coder.getFromLocationName(strAddress, 1);
+            if (address == null) {
+                return null;
+            }
+            return new LatLng(address.get(0).getLatitude(),address.get(0).getLongitude());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String latLngToString(LatLng latLng){
+        return latLng.latitude+","+latLng.longitude;
+    }
 }
