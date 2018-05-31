@@ -20,12 +20,18 @@
         android:name=".App">
 
         <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".HitchHikerActivity" />
+        <activity
+            android:name=".MainActivity" />
         <service android:name="utils.LocationService" android:process=":LocationService" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

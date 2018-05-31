@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,17 +21,13 @@ import utils.LocationUtil;
 public class MainActivity extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private HitchhikerManager hitchhikerManager;
+    HitchhikerManager hitchhikerManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         permissions();
-        hitchhikerManager=new HitchhikerManager();
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
-
+        hitchhikerManager=new HitchhikerManager();
         Button OK_button = findViewById(R.id.OK_button);
         OK_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     Output.setText("Missing input!");
                 else
                     Output.setText("Driving from " + Starting_Point + " to " + Destination_Point + "...\nHave a nice ride!");
-                if (Starting_Point.equals(getResources().getString(R.string.current_location)))
+                if (((CheckBox) findViewById(R.id.CurrentLocation)).isChecked())
                     startingPoint=LocationUtil.getCurrentLocation();
                 else
                     startingPoint=LocationUtil.addressToLatLng(Starting_Point);
@@ -62,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     private void permissions(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -71,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     MY_PERMISSIONS_REQUEST_LOCATION);
         }
     }
+
 
 
 }
