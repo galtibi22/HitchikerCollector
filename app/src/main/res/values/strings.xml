@@ -2,5 +2,4 @@
     <string name="app_name">HitchikerCollector</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>
-    <string name="current_location">Current Location</string>
 </resources>

@@ -17,50 +17,70 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/Destination" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="305dp"
+        android:id="@+id/Name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Name"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="305dp"
+        android:id="@+id/Sourse"
+        android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Enter a source"
+        android:hint="Enter a source"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/Name" />
 
     <EditText
-        android:id="@+id/editText3"
-        android:layout_width="305dp"
+        android:id="@+id/Destination"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Enter a destination"
+        android:text="Afeka College"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/CurrentLocation" />
+
+    <TextView
+        android:id="@+id/Output"
+        android:layout_width="368dp"
+        android:layout_height="170dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OK_button"
+        android:textAlignment="center"/>
+
+    <CheckBox
+        android:id="@+id/CurrentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use your current location"
+        app:layout_constraintTop_toBottomOf=" @+id/Sourse"/>
 </android.support.constraint.ConstraintLayout>

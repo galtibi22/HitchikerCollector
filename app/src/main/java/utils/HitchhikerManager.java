@@ -14,11 +14,28 @@ import pojo.Step;
 public class HitchhikerManager {
 
 
-    public String getHitchhikers(LatLng startingPoint, LatLng destinationPoint) {
-        HttpClient httpClient=new HttpClient();
-        String response=httpClient.get("https://maps.googleapis.com/maps/api/directions/json?&origin=" + LocationUtil.latLngToString(startingPoint) + "&destination=" + LocationUtil.latLngToString(destinationPoint) + "&travelmode=driving&key=AIzaSyAPBr94Xd4cFHqdBwvrHEcr-QyJPHdVHGU");
+    public String getHitchhikers(final LatLng startingPoint, final LatLng destinationPoint) {
+        final String[] response = new String[1];
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try  {
+                    HttpClient httpClient=new HttpClient();
+                    response[0] =httpClient.get("https://maps.googleapis.com/maps/api/directions/json?&origin=" + LocationUtil.latLngToString(startingPoint) + "&destination=" + LocationUtil.latLngToString(destinationPoint) + "&travelmode=driving&key=AIzaSyAPBr94Xd4cFHqdBwvrHEcr-QyJPHdVHGU");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Gson g = new Gson();
-        Direction direction = g.fromJson(response, Direction.class);
+        Direction direction = g.fromJson(response[0], Direction.class);
         List<List<LatLng>> polygons=findPolygons(direction);
         List<LatLng> hitchhikersLocation=getHitchhikers(destinationPoint);
         List<LatLng> hitchhikersCollection=new ArrayList<>();

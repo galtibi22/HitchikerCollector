@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".DriverActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <EditText
@@ -17,12 +17,11 @@
         android:hint="Enter Destination"
         android:inputType="text"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/Starting_Point"
+        app:layout_constraintTop_toBottomOf="@+id/CurrentLocation"
         tools:layout_editor_absoluteX="8dp"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:text="@string/current_location"
         android:id="@+id/Starting_Point"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -66,4 +65,11 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OK_button" />
+
+    <CheckBox
+        android:id="@+id/CurrentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use your current location"
+        app:layout_constraintTop_toBottomOf=" @+id/Starting_Point"/>
 </android.support.constraint.ConstraintLayout>
