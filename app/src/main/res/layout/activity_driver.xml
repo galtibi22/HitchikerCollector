@@ -11,12 +11,12 @@
         android:id="@+id/Destination_Point"
         android:text="Afeka College"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="Enter Destination"
         android:inputType="text"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/CurrentLocation"
         tools:layout_editor_absoluteX="8dp"
         tools:ignore="MissingConstraints" />
@@ -24,27 +24,31 @@
     <EditText
         android:id="@+id/Starting_Point"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:inputType="textPersonName"
         android:hint="Enter Starting Point"
-        android:inputType="text"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="33dp"
-        tools:ignore="MissingConstraints" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/OK_button"
         android:layout_width="135dp"
-        android:layout_height="69dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:text="OK"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,18 +57,15 @@
 
     <TextView
         android:id="@+id/Output"
-        android:layout_width="365dp"
-        android:layout_height="170dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/OK_button" />
+        android:textSize="20sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/OK_button"
+        app:layout_constraintTop_toBottomOf="@+id/OK_button"
+        android:textAlignment="center"/>
 
     <CheckBox
         android:id="@+id/CurrentLocation"

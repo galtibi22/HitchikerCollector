@@ -1,6 +1,8 @@
 package utils;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.maps.android.PolyUtil;
 
@@ -8,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pojo.Direction;
+import pojo.HichhikerWrapper;
+import pojo.HitchHiker;
 import pojo.Leg;
 import pojo.Step;
 
 public class HitchhikerManager {
-
 
     public String getHitchhikers(final LatLng startingPoint, final LatLng destinationPoint) {
         final String[] response = new String[1];
@@ -37,18 +40,16 @@ public class HitchhikerManager {
         Gson g = new Gson();
         Direction direction = g.fromJson(response[0], Direction.class);
         List<List<LatLng>> polygons=findPolygons(direction);
-        List<LatLng> hitchhikersLocation=getHitchhikers(destinationPoint);
+        List<HitchHiker> hitchhikersLocation=getHitchhikers(destinationPoint);
         List<LatLng> hitchhikersCollection=new ArrayList<>();
-        for (LatLng hitchhiker:hitchhikersLocation){
+        for (HitchHiker hitchhiker:hitchhikersLocation){
             for (List<LatLng> polygon:polygons){
-                if ( PolyUtil.containsLocation(hitchhiker,polygon,true)){
-                    hitchhikersCollection.add(hitchhiker);
+                if ( PolyUtil.containsLocation(hitchhiker.getStarting_point(),polygon,true)){
+                    hitchhikersCollection.add(hitchhiker.getStarting_point());
                     break;
                 }
             }
         }
-
-       // String collectPoint =LocationUtil.addressToLatLngStr("Beit Yanai,Israel") + "%7C" + LocationUtil.addressToLatLngStr("Netanya,Israel");
         return hitchhikersCollectionToApiString(hitchhikersCollection);
     }
 
@@ -69,50 +70,50 @@ public class HitchhikerManager {
         for (Leg leg:direction.getRoutes().get(0).getLegs())
             for (Step step:leg.getSteps()) {
                 points2.addAll(PolyUtil.decode(step.getPolyline().getPoints()));
-                }
-        for (LatLng latLng:points2){
-            List<LatLng> polygon=new ArrayList<>();
-            polygon.add(new LatLng(latLng.latitude+0.005,latLng.longitude));
-            polygon.add(new LatLng(latLng.latitude-0.005,latLng.longitude));
-            polygon.add(new LatLng(latLng.latitude,latLng.longitude+0.005));
-            polygon.add(new LatLng(latLng.latitude,latLng.longitude-0.005));
-            polygons.add(polygon);
-        }
-      /*  for (Leg leg:direction.getRoutes().get(0).getLegs())
-            for (Step step:leg.getSteps()){
-                List<LatLng> polygonStart=new ArrayList<>();
-                List<LatLng> polygonEnd=new ArrayList<>();
-                LatLng startPoint=new LatLng(step.getStartLocation().getLat(),step.getStartLocation().getLng());
-                LatLng endPoint=new LatLng(step.getEndLocation().getLat(),step.getEndLocation().getLng());
-                polygonStart.add(new LatLng(startPoint.latitude+0.005,startPoint.longitude));
-                polygonStart.add(new LatLng(startPoint.latitude-0.005,startPoint.longitude));
-                polygonStart.add(new LatLng(startPoint.latitude,startPoint.longitude+0.005));
-                polygonStart.add(new LatLng(startPoint.latitude,startPoint.longitude-0.005));
-
-                polygonEnd.add(new LatLng(endPoint.latitude+0.005,endPoint.longitude));
-                polygonEnd.add(new LatLng(endPoint.latitude-0.005,endPoint.longitude));
-                polygonEnd.add(new LatLng(endPoint.latitude,endPoint.longitude+0.005));
-                polygonEnd.add(new LatLng(endPoint.latitude,endPoint.longitude-0.005));
-                polygons.add(polygonStart);
-                polygons.add(polygonEnd);
-            }*/
+            }
+        for (LatLng latLng:points2)
+            polygons.add(initPolygon(latLng));
         return polygons;
 
     }
 
-    private ArrayList<LatLng> getHitchhikers(LatLng destination){
-        ArrayList<LatLng> hitchhikersLocation=new ArrayList<>();
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("צומת פרדסיה"));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("Beit Yanai,Israel"));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("Netanya,Israel"));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("Berl Katsnelson 4, Hertsliya"));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("Berl Katsnelson 38, Hertsliya"));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("Yerushalaim Rd 7, Hertsliya"));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("המשכית 3 הרצליה"));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("Emma Tauber Fridman 9 Hertsliya"));
-        hitchhikersLocation.add(new LatLng(32.178659, 34.852294));
-        hitchhikersLocation.add(LocationUtil.addressToLatLng("בן גוריון הרצליה"));
+    private List<HitchHiker> getHitchhikers(LatLng destination){
+        final String[] response = new String[1];
+       /* Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try  {*/
+                    HttpClient httpClient=new HttpClient();
+                    response[0] =httpClient.get("https://hitchikercollector.firebaseio.com/.json");
+                //} catch (Exception e) {
+                  //  e.printStackTrace();
+                //}
+            //}
+        //});
+        //thread.start();
+        //try {
+          //  thread.join();
+        //} catch (InterruptedException e) {
+          //  e.printStackTrace();
+        //}
+        Gson g = new Gson();
+        List<HitchHiker> hitchHikerList =g.fromJson("{\"hitchHikers\":"+response[0]+"}", HichhikerWrapper.class).getHitchHikers();;
+        List<HitchHiker> hitchhikersLocation=new ArrayList<>();
+        List<LatLng> poly=initPolygon(destination);
+        for (int i=1;i<hitchHikerList.size();i++){
+            if (PolyUtil.containsLocation(hitchHikerList.get(i).getDestination_point(),poly,true))
+                hitchhikersLocation.add(hitchHikerList.get(i));
+        }
 
         return  hitchhikersLocation;
+    }
+
+    private  List<LatLng> initPolygon(LatLng latLng){
+        List<LatLng> polygon=new ArrayList<>();
+        polygon.add(new LatLng(latLng.latitude+0.005,latLng.longitude));
+        polygon.add(new LatLng(latLng.latitude-0.005,latLng.longitude));
+        polygon.add(new LatLng(latLng.latitude,latLng.longitude+0.005));
+        polygon.add(new LatLng(latLng.latitude,latLng.longitude-0.005));
+        return polygon;
     }
 }
